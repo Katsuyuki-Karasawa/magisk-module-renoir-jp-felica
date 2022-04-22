@@ -1,0 +1,25 @@
+name: Releases
+
+on: 
+  push:
+    tags:
+    - 'v*'
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      ## こんな感じで -> v0.0.1 とか
+      - run: echo ${GITHUB_REF##*/}
+      ## 実際に使うときは環境変数にしたりとか
+      - name:
+      - run: echo "TAG=${GITHUB_REF##*/}" >> $GITHUB_ENV
+    - uses: actions/checkout@v2
+    - uses: ncipollo/release-action@v1
+      with:
+        artifactContentType: "zip"
+        artifacts: "magisk-module-renoir-jp-felica_"$TAG".zip"
+        token: ${{ secrets.GITHUB_TOKEN }}
